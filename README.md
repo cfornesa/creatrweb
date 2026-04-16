@@ -24,9 +24,9 @@ tool you use:
 
 ## Your Tool Stack
 
-CreatrWeb supports two stacks. Use the one that fits your budget.
+CreatrWeb supports several stacks. Use the one that fits your budget and feel free to mix and match.
 
-### Paid stack
+### Paid stack(s)
 These tools have free tiers but perform best on paid plans:
 
 | Tool | What it is | Install |
@@ -37,6 +37,9 @@ These tools have free tiers but perform best on paid plans:
 | **Gemini CLI** | Terminal-based agent by Google | `npm install -g @google/gemini-cli` |
 | **GitHub Copilot** | In-editor assistant in VS Code | Install **GitHub Copilot** from the VS Code Extensions panel (`Ctrl+Shift+X`) |
 | **Replit** | Browser-based agent and IDE | Sign up at [replit.com](https://replit.com) — no install needed |
+| **Vibe CLI** | Terminal-based agent by Mistral AI | `npm install -g @mistral/vibe-cli` |
+
+These tools can work individually or in conjunction, depending on your workflow, preferences, and budget.
 
 ### Free stack
 These tools and API providers are genuinely free to start with no credit card:
@@ -552,6 +555,31 @@ installation needed — everything runs in the browser.
 
 **Known limitation:** Auto Build mode does not pause for gallery
 confirmation. Review `DECISIONS.md` at the end of every session.
+
+---
+
+### Vibe CLI
+**Best for:** Autonomous full-stack scaffolding sessions where you want
+the agent working across the codebase with minimal interruption.
+
+**What it is:** A terminal-based agent by Mistral that reads `AGENTS.md`
+natively and applies conservative defaults in Auto Build mode.
+
+**How it reads context:** Reads `AGENTS.md` natively from the project
+root. Skills in `.agents/skills/` are discovered automatically.
+
+**Cost:** Paid (Mistral API key required).
+
+**Install:** `npm install -g vibe-cli`
+
+**Known limitation:** Auto Build mode does not pause for gallery
+confirmation. Review `DECISIONS.md` after every session to see which
+conservative defaults were selected and override any that don't reflect
+your direction.
+
+**Tip:** Use `DECISIONS.md` as your review artifact after every Vibe CLI
+session, not during it. Start the following session with those unresolved
+checkpoints in your SESSION CONSTRAINTS block.
 
 ---
 
