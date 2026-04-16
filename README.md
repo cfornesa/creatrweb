@@ -2,15 +2,8 @@
 
 A portable kit of context files and loadable skills that guides AI coding
 agents toward creative, human-steered, IndieWeb-aligned development. Works
-across Claude Code, Codex CLI, Cursor, Gemini CLI, GitHub Copilot, and
-Replit from a single source of truth.
-
-## `documents/` indexing note
-
-When you run `npm run rag:index`, the indexer reads top-level `.md`,
-`.txt`, `.html`, and `.pdf` files from `documents/`, converts them to
-plain text, chunks them, and rewrites `embeddings.json` in the project
-root. PDF extraction stays local through Poppler's `pdftotext`.
+across Claude Code, Codex CLI, Cursor, Gemini CLI, GitHub Copilot, Vibe CLI,
+Kilo Code, Opencode, and Replit from a single source of truth.
 
 ---
 
@@ -29,42 +22,162 @@ tool you use:
 
 ---
 
+## Your Tool Stack
+
+CreatrWeb supports two stacks. Use the one that fits your budget.
+
+### Paid stack
+These tools have free tiers but perform best on paid plans:
+
+| Tool | What it is | Install |
+|---|---|---|
+| **Claude Code** | Terminal-based agent by Anthropic | `npm install -g @anthropic-ai/claude-code` |
+| **Codex CLI** | Terminal-based agent by OpenAI | `npm install -g @openai/codex` |
+| **Cursor** | VS Code fork with built-in AI | Download at [cursor.com](https://cursor.com) |
+| **Gemini CLI** | Terminal-based agent by Google | `npm install -g @google/gemini-cli` |
+| **GitHub Copilot** | In-editor assistant in VS Code | Install **GitHub Copilot** from the VS Code Extensions panel (`Ctrl+Shift+X`) |
+| **Replit** | Browser-based agent and IDE | Sign up at [replit.com](https://replit.com) — no install needed |
+
+### Free stack
+These tools and API providers are genuinely free to start with no credit card:
+
+| Tool / Provider | What it is | Install or sign up |
+|---|---|---|
+| **Kilo Code** | VS Code extension that connects to any model API | Install **Kilo Code** from the VS Code Extensions panel — search "Kilo Code", click the dropdown arrow next to Install, select **Install Pre-Release Version** [web:37] |
+| **Opencode** | Terminal-based agent that connects to any model API | Run `curl -fsSL https://opencode.ai/install | bash` in your terminal [web:82] |
+| **Groq (free API)** | Extremely fast inference, free tier, no credit card | Sign up at [console.groq.com](https://console.groq.com), go to API Keys, click **Create API Key** [web:83] |
+| **OpenRouter (free models)** | Routes requests to free models from many providers | Sign up at [openrouter.ai](https://openrouter.ai), go to API Keys, click **Create API Key** — free models need no credit card [web:85][web:90] |
+
+> **Connecting Kilo Code or Opencode to a free API:**
+> Once you have a Groq or OpenRouter API key, open Kilo Code or Opencode,
+> go to its API provider settings, paste your key, and select the model
+> you want. Both tools support Groq and OpenRouter out of the box.
+> On Groq free tier, keep your AGENTS.md and any loaded skills under
+> ~4,000 tokens combined to stay within per-minute limits.
+
+---
+
 ## Repository Structure
 
-Place these files at the root of every new project before your first
-agent session:
 your-project/
-├── AGENTS.md ← Main instruction file (all agents)
-├── CLAUDE.md ← Claude Code entry point
-├── CONSTRAINTS.md ← Active project constraints (starts empty)
-├── DECISIONS.md ← Architecture log (agent fills during sessions)
-├── DESIGN.md ← Your aesthetic references and identity
-├── EVAL_PROMPT.md ← Post-session compliance audit
-├── GEMINI.md ← Gemini CLI entry point
-├── .env.example ← Environment variable reference
-├── .agents + .claude/
-│ └── skills/
-│ ├── gallery-format/
-│ │ └── SKILL.md ← Options protocol before design decisions
-│ ├── socratic-depth/
-│ │ └── SKILL.md ← Assumption-surfacing question taxonomy
-│ ├── indieweb-specs/
-│ │ └── SKILL.md ← IndieWeb specification reference
-│ ├── indieweb-principles/
-│ │ └── SKILL.md ← IndieWeb philosophy reference
-│ ├── posse-syndication/
-│ │ └── SKILL.md ← POSSE, URL conventions, export endpoints
-│ └── design-workflow/
-│ └── SKILL.md ← Populating and maintaining DESIGN.md
+├── AGENTS.md               ← Main instruction file (all agents)
+├── CLAUDE.md               ← Claude Code entry point
+├── CONSTRAINTS.md          ← Active project constraints (starts empty)
+├── DECISIONS.md            ← Architecture log (agent fills during sessions)
+├── DESIGN.md               ← Your aesthetic references and identity
+├── EVAL_PROMPT.md          ← Post-session compliance audit
+├── GEMINI.md               ← Gemini CLI entry point
+├── KILO.md                 ← Kilo Code entry point
+├── OPENCODE.md             ← Opencode entry point
+├── .env.example            ← Environment variable reference
+├── .agents/
+│   └── skills/
+│       ├── gallery-format/       SKILL.md ← Options protocol
+│       ├── socratic-depth/       SKILL.md ← Assumption-surfacing questions
+│       ├── indieweb-specs/       SKILL.md ← IndieWeb specification reference
+│       ├── indieweb-principles/  SKILL.md ← IndieWeb philosophy reference
+│       ├── posse-syndication/    SKILL.md ← POSSE, URL conventions, exports
+│       ├── design-workflow/      SKILL.md ← Populating and maintaining DESIGN.md
+│       ├── security/             SKILL.md ← IndieWeb endpoint security rules
+│       ├── testing/              SKILL.md ← Test scope and pre-merge checklist
+│       └── memory-files/         SKILL.md ← Memory file rules and entry format
+├── .claude/skills/         ← Symlink or copy of .agents/skills/ for Claude Code
 ├── .gemini/
-│ └── settings.json ← Gemini CLI context configuration
-└── .github/
-└── copilot-instructions.md ← GitHub Copilot entry point
+│   └── settings.json       ← Gemini CLI context configuration
+├── .github/
+│   └── copilot-instructions.md ← GitHub Copilot entry point
+└── inactive/               ← Prior AGENTS.md versions (not read by agents)
 
 Files the agent creates during sessions — do not create manually:
-MEMORY.md ← Confirmed lessons (agent proposes, you approve)
-docs/dependencies.md ← Vendor dependency registry (agent maintains)
+MEMORY.md               ← Confirmed lessons (agent proposes, you approve)
+docs/dependencies.md    ← Vendor dependency registry (agent maintains)
 
+---
+
+## What Files Do You Actually Need?
+
+Not every file is required for every setup. Use this table to decide:
+
+| File or folder | Required for | Skip if |
+|---|---|---|
+| `AGENTS.md` | Everyone — all agents read this | Never skip |
+| `CLAUDE.md` | Claude Code users | You don't use Claude Code |
+| `KILO.md` | Kilo Code users | You don't use Kilo Code |
+| `OPENCODE.md` | Opencode users | You don't use Opencode |
+| `GEMINI.md` + `.gemini/settings.json` | Gemini CLI users | You don't use Gemini CLI |
+| `.github/copilot-instructions.md` | GitHub Copilot users | You don't use Copilot |
+| `CONSTRAINTS.md` | Everyone — created on first constraint | Agent creates it; don't make manually |
+| `DECISIONS.md` | Everyone — created at session start | Agent creates it; don't make manually |
+| `MEMORY.md` | Everyone — created on first confirmed lesson | Agent creates it; don't make manually |
+| `DESIGN.md` | Anyone doing visual or UI work | Projects with no visual component |
+| `EVAL_PROMPT.md` | Anyone running post-session audits | Optional but strongly recommended |
+| `skills/indieweb-specs` | IndieWeb spec implementors | Projects with no IndieWeb features |
+| `skills/indieweb-principles` | IndieWeb spec implementors | Projects with no IndieWeb features |
+| `skills/posse-syndication` | Anyone implementing POSSE or feeds | Projects with no syndication |
+| `skills/security` | Anyone writing IndieWeb endpoints | Projects with no auth or Webmention |
+| `skills/testing` | Everyone — pre-merge checklist | Never skip for spec routes |
+| `skills/gallery-format` | Everyone — fires with Rule 2 | Never skip |
+| `skills/socratic-depth` | Everyone — fires with Rule 1 | Never skip |
+| `skills/design-workflow` | Anyone using DESIGN.md | Projects with no visual component |
+| `skills/memory-files` | Everyone — fires at session end | Never skip |
+| `.env.example` | Projects with environment variables | Fully static projects |
+| `inactive/` | Storing old AGENTS.md versions | Not needed in production |
+
+---
+
+## Using AI Chatbots to Fill In Your Markdown Files
+
+Before your first coding session, several files benefit from human-written
+content. An AI chatbot — Claude via Perplexity, ChatGPT, Gemini, or any
+conversational AI — can help you think through and draft this content
+without touching your codebase. This is a preparation step, not a coding step.
+
+### DESIGN.md — References and Declared Preferences
+
+The References section is the most important thing to fill in before any
+design work. Use a chatbot to surface what you actually like:
+
+> "I want to fill in the References section of a design identity file.
+> Ask me questions about websites, apps, art, or visual work I admire,
+> and help me articulate what I find compelling about them.
+> Don't suggest anything yet — just ask."
+
+After several exchanges:
+
+> "Based on what I've described, what common threads do you see across
+> my references? Present it as a hypothesis, not a conclusion — I'll
+> confirm or correct it."
+
+The output becomes your Derived Identity section. Paste it into
+DESIGN.md and confirm or edit it before your first session.
+
+### CONSTRAINTS.md — Non-Negotiables
+
+> "I'm starting a web project. Ask me questions to help me identify
+> any non-negotiable rules I have about dependencies, data privacy,
+> licensing, or technical choices. One question at a time."
+
+Any constraint that surfaces goes into CONSTRAINTS.md before your
+first coding session. Agents treat this file as a no-fly zone and
+respect a written constraint far more reliably than a verbal one.
+
+### DECISIONS.md — Project Profile
+
+> "I want to build [plain-language description]. Help me articulate
+> my stack, deployment target, database approach, and key version
+> constraints in plain language — no jargon unless I introduce it first."
+
+Paste the result into the Project Profile section of DECISIONS.md.
+If you leave it blank, your coding agent will ask the same questions
+at session start — either approach works.
+
+### AGENTS.md — When to Add Something
+
+AGENTS.md is the one file you should not draft with a chatbot from
+scratch — the version in this repo is the authoritative template.
+The only time to add something before a first session is a
+project-specific rule you know in advance will matter. Propose it
+as a diff, confirm it, then add it.
 
 ---
 
@@ -72,82 +185,57 @@ docs/dependencies.md ← Vendor dependency registry (agent maintains)
 
 ### Step 1 — Copy the kit
 
-Copy all files from this template into your project root. No
-configuration required before your first session.
+Copy all files from this template into your project root. Remove
+the entry point files for tools you don't use (e.g. if you don't
+use Gemini CLI, you don't need `GEMINI.md` or `.gemini/settings.json`).
 
-### Step 2 — Fill in the Project Profile (optional)
+### Step 2 — Fill in DESIGN.md and CONSTRAINTS.md (recommended)
 
-Open `AGENTS.md` and find the **Project Profile** section near the top.
-If you know what you are building, fill in the four fields at an
-architecture level — no technical details required:
-<!-- Replace any of the following existing details if you know what you want -->
-Deployment: Node.js PaaS, single process, Express via npm start
-Database: SQLite via Drizzle ORM
-Version pins: Node 20, esbuild 0.25.x, tsx 4.21.0
-Stack: Express + TypeScript + static HTML/CSS/JS
-
-
-If you leave this blank, the agent will ask three plain-language
-questions at the start of the first session and fill it in for you.
+Use the chatbot workflow above before your first coding session.
+The more context your agents have on day one, the fewer clarifying
+questions they need to ask mid-build.
 
 ### Step 3 — Set up your environment
 
 Copy `.env.example` to `.env` and fill in any values your project
-needs. Never commit `.env` to version control — it is in `.gitignore`
-by default.
+needs. Add your Groq or OpenRouter API key here if using the free
+stack. Never commit `.env` to version control.
 
 ### Step 4 — Start your first session
 
-Open your chosen agent tool in the project directory and begin. The
-agent reads `AGENTS.md` automatically. No special prompt is required
-for the first session — it will ask one question to confirm the
-current phase before writing any code.
+Open your chosen agent tool in the project directory and begin.
+The agent reads `AGENTS.md` automatically.
 
-### Hostinger deployment note
+### Step 5 — Reference AGENTS.md at session start
 
-This repo is configured to deploy as a bundled Express app.
-
-- `npm run build` runs esbuild against `server.ts` and emits
-  `server.bundle.js`.
-- `npm start` runs `HOST=0.0.0.0 node server.bundle.js`.
-- On Hostinger, use the `Other` framework preset, keep the root
-  directory at `./`, use Node.js `20.x`, keep the output directory
-  empty, and set the entry file to `server.bundle.js`.
-- Hostinger build settings should stay on `npm` with `npm run build`.
-- Runtime environment should include `NODE_ENV=production` and
-  `HOST=0.0.0.0` and `PORT=5000`.
-- Do not point Hostinger at `dist/server/entry.mjs` or use managed
-  `Astro` / `Next.js` presets for this repo.
-
-If Hostinger is left on a preset that assumes framework-managed startup
-instead of the bundled Express entrypoint, the app can deploy with
-the wrong runtime contract even if the build itself succeeds.
-
-Because some hosts install production dependencies only before running
-the build, this repo keeps build-critical modules in `dependencies`.
-`esbuild` is required to create `server.bundle.js`, and `dotenv` is
-imported by `server.ts` during bundling.
-
-### Step 5 — Reference AGENTS.md directly at session start
-
-While AI agents are programmed to read `AGENTS.md`, their attention
-can drift toward generic coding defaults without an explicit anchor.
 Start every session with a SESSION CONSTRAINTS block:
 
 > "Starting a new session.
 > SESSION CONSTRAINTS: Follow all rules in AGENTS.md when processing
 > all prompts in this conversation. Are you ready?"
 
-This promotes reference-section rules into active working context
-for the full session.
-
 **If the agent skips a rule mid-session**, stop it immediately:
 - "Stop. Check AGENTS.md Rule 2 before proceeding."
 - "Wait — did you ask the Rule 1 question for this change?"
 
-Human feedback and judgment is the single most important component
-in this process — especially when building something authentic to
-who you are.
+<details>
+<summary>Hostinger deployment note</summary>
+
+This repo is configured to deploy as a bundled Express app.
+
+- `npm run build` runs esbuild against `server.ts` and emits `server.bundle.js`.
+- `npm start` runs `HOST=0.0.0.0 node server.bundle.js`.
+- On Hostinger, use the `Other` framework preset, keep the root
+  directory at `./`, use Node.js `20.x`, keep the output directory
+  empty, and set the entry file to `server.bundle.js`.
+- Build settings: `npm` with `npm run build`.
+- Runtime env: `NODE_ENV=production`, `HOST=0.0.0.0`, `PORT=5000`.
+- Do not use managed Astro / Next.js presets.
+
+`esbuild` is required to create `server.bundle.js` and is kept in
+`dependencies` because some hosts install only production deps before
+running the build.
+</details>
 
 ---
 
@@ -162,7 +250,7 @@ keeping the active context lean.
 
 Reference a skill by name in your session prompt or mid-session:
 
-> "Load `$gallery-format` and show me options for the URL structure."
+> "Load `gallery-format` and show me options for the URL structure."
 
 Or, if `AGENTS.md` instructs the agent to load a skill automatically
 (e.g. Rule 2 fires), the agent reads it without you needing to ask.
@@ -170,13 +258,20 @@ Or, if `AGENTS.md` instructs the agent to load a skill automatically
 ### Skill reference
 
 | Skill | Load when |
-|-------|----------|
-| `$gallery-format` | Rule 2 applies — options needed before a design decision |
-| `$socratic-depth` | Rule 1 applies — a question is needed before a significant change |
-| `$indieweb-specs` | Implementing or modifying any IndieWeb specification |
-| `$indieweb-principles` | A decision touches ownership, portability, or longevity |
-| `$posse-syndication` | URL structure, syndication targets, or export endpoints |
-| `$design-workflow` | `DESIGN.md` is empty, incomplete, or needs updating |
+|---|---|
+| `gallery-format` | Rule 2 fires — options needed before any design or architecture decision |
+| `socratic-depth` | Rule 1 fires — a question must be asked before a significant change |
+| `indieweb-specs` | Implementing or modifying rel=me, microformats2, Webmention, IndieAuth, Micropub, WebSub |
+| `indieweb-principles` | A decision touches ownership, portability, or longevity |
+| `posse-syndication` | Finalizing URL structure, syndication targets, or export endpoints |
+| `design-workflow` | DESIGN.md is empty, or a gallery needs Derived Identity or Observed Taste |
+| `security` | Writing any Webmention, IndieAuth, Micropub, or media upload handler |
+| `testing` | Before releasing any spec route or merging any branch |
+| `memory-files` | End of session; proposing MEMORY.md or DECISIONS.md updates |
+
+> Token budget: each skill costs 300–2,400 tokens. On free-tier models
+> (Groq, OpenRouter), load only when that skill's work is the focus of
+> the current exchange. Never pre-load.
 
 ---
 
@@ -184,106 +279,96 @@ Or, if `AGENTS.md` instructs the agent to load a skill automatically
 
 ### `AGENTS.md`
 The authoritative instruction file. Read by every agent on every
-session start. Contains:
-- Six Rules that override all agent defaults
-- Brainstorm Mode for open-ended exploration
-- Gallery protocol for design decisions
-- IndieWeb specifications and POSSE rules
-- Memory file management and session-end requirements
+session start. Contains the Six Rules, Brainstorm Mode, Mode table,
+Agent Use gate, Core Constraints, Vendor Dependency question, Skills
+table, Memory Files table, and AGENTS.md Safeguard.
 
-**Do not edit during a session.** Only the project owner changes
-this file. The agent proposes changes as a diff and waits for approval.
+**Do not edit during a session.** The agent proposes changes as a
+diff and waits for approval.
 
 ---
 
 ### `CLAUDE.md`
-A one-line file that imports `AGENTS.md` into Claude Code. Claude
-Code reads `CLAUDE.md` natively — this file ensures it gets the
-full `AGENTS.md` ruleset without duplication. Add any Claude-specific
-instructions below the import line.
+Claude Code's entry point. Imports AGENTS.md so the full ruleset
+loads without duplication.
 
-```markdown
-# CLAUDE.md
 @AGENTS.md
+<!-- Claude Code-specific additions below. -->
 
-<!-- Claude Code-specific additions below.
-     AGENTS.md is the authoritative rule set. -->
+---
+
+### `KILO.md`
+Kilo Code's entry point. Kilo Code is a VS Code extension that
+connects to any model API — Groq, OpenRouter, Anthropic, OpenAI,
+Google, or local models [web:36]. Use it with free Groq or
+OpenRouter keys for a zero-cost setup.
+
+@AGENTS.md
+<!-- Kilo Code-specific additions below. -->
+
+> To connect to Groq in Kilo Code: open the Kilo Code panel in VS
+> Code, go to API Provider settings, select **Groq**, and paste your
+> API key. To use OpenRouter free models, select **OpenRouter**,
+> paste your key, and choose a model ending in `:free` [web:90].
+
+---
+
+### `OPENCODE.md`
+Opencode's entry point. Opencode is a terminal-based agent —
+similar to Claude Code or Codex CLI — that connects to any model
+API [web:82]. Install with:
+
+```bash
+curl -fsSL https://opencode.ai/install | bash
 ```
+
+Or via npm: `npm install -g opencode-ai`
+
+@AGENTS.md
+<!-- Opencode-specific additions below. -->
+
+> To connect to Groq or OpenRouter: run `opencode` in your project
+> directory, open provider settings, and paste your API key.
 
 ---
 
 ### `CONSTRAINTS.md`
-Starts empty. The agent creates an entry here the first time you
-state a constraint during any session — licensing requirements,
-data privacy rules, dependency restrictions, anything binding.
-Constraints are permanent until you explicitly lift them.
+Starts empty. Created by the agent the first time you state a
+constraint. Format:
 
-Format the agent uses automatically:
-CONSTRAINT: No third-party analytics or tracking scripts
-SCOPE: All pages and API routes
-SET: YYYY-MM-DD
-
-
-If you find yourself repeating the same correction to the agent
-(e.g. "Don't use styled-jsx"), add it to `CONSTRAINTS.md`. Agents
-treat this file as a no-fly zone and are far more likely to respect
-a written constraint than a verbal correction.
+CONSTRAINT  No third-party analytics or tracking scripts
+SCOPE       All pages and API routes
+SET         YYYY-MM-DD
 
 ---
 
 ### `DECISIONS.md`
-Starts as a template with a Project Profile and phase sections.
-The agent fills in each section during sessions — you never need
-to write to this file directly. It becomes the persistent audit
-trail for every architectural decision made across all phases and
-all tools.
+Agent-maintained audit trail for every architectural decision.
+Starts as a template. You never need to write to it directly.
 
 ---
 
 ### `DESIGN.md`
-Your aesthetic identity file. Starts empty. Contains three sections:
+Your aesthetic identity file. Three sections:
 
-- **References** — specific works, sites, designers, or artifacts
-  you've named as influences. Written in your own words.
-- **Derived Identity** — the agent's synthesis of what your
-  references reveal about your aesthetic direction. Presented as
-  a hypothesis and confirmed by you before being written.
-- **Observed Taste** — patterns the agent notices in your actual
-  decisions across sessions. Not what you say you like — what you
-  consistently choose.
+- **References** — works, sites, or art you admire. Your words.
+- **Derived Identity** — the agent's synthesis, confirmed by you.
+- **Observed Taste** — patterns noticed across sessions, proposed
+  at session end.
 
-The `$design-workflow` skill governs how the agent populates and
-maintains this file. Load it when you're ready to build your
-design profile, or when a gallery option needs to reference your
-aesthetic accurately.
-
-When `DESIGN.md` is empty, the agent names the gap honestly and
-draws gallery options from the current session's conversation
-instead. Gallery options become more accurate to you as this file
-is populated over time.
+Load `design-workflow` when you're ready to populate this file.
 
 ---
 
 ### `.agents/skills/`
-Loadable instruction sets that extend `AGENTS.md` for specific work.
-Each skill is a directory containing a `SKILL.md` file with YAML
-frontmatter that agents use for automatic discovery. See
-**How Skills Work** above for the full reference.
-
----
-
-### `.env.example`
-A reference file showing which environment variable names the
-project requires. Contains no values — only names. Copy to `.env`
-and fill in values locally. The agent updates `DECISIONS.md` with
-required variable names as new ones are introduced.
+Loadable instruction sets. Each skill is a directory with a
+`SKILL.md` file. Load on demand only — never pre-load.
 
 ---
 
 ### `.gemini/settings.json`
-Required for Gemini CLI. Without it, Gemini ignores `AGENTS.md`
-and uses its own defaults. Lists every context file and skill the
-agent should load at session start:
+Required for Gemini CLI. Skills are not listed here — they load
+on demand.
 
 ```json
 {
@@ -292,13 +377,7 @@ agent should load at session start:
     "DECISIONS.md",
     "CONSTRAINTS.md",
     "DESIGN.md",
-    "MEMORY.md",
-    ".agents/skills/gallery-format/SKILL.md",
-    ".agents/skills/socratic-depth/SKILL.md",
-    ".agents/skills/indieweb-specs/SKILL.md",
-    ".agents/skills/indieweb-principles/SKILL.md",
-    ".agents/skills/posse-syndication/SKILL.md",
-    ".agents/skills/design-workflow/SKILL.md"
+    "MEMORY.md"
   ],
   "ignore": [
     "node_modules",
@@ -311,187 +390,187 @@ agent should load at session start:
 }
 ```
 
-`MEMORY.md` is listed so Gemini picks up confirmed lessons from
-prior sessions automatically. If it does not yet exist, Gemini
-skips it silently.
-
 ---
 
 ### `.github/copilot-instructions.md`
-GitHub Copilot's entry point into the framework. Rather than
-duplicating `AGENTS.md`, this file instructs Copilot to read it
-and defines Copilot-specific behavior for chat mode, inline
-suggestion mode, and Workspace plan mode. The full ruleset still
-lives in `AGENTS.md`.
+Copilot's entry point. Points to `AGENTS.md` and defines chat,
+inline, and Workspace plan mode behavior.
 
 ---
 
 ### `EVAL_PROMPT.md`
-Not read automatically. Use it at the end of any session to run a
-structured compliance audit. Paste its contents into the tool that
-just completed the session, or into a separate analysis session
-with the chat log attached. The agent scores each rule Pass /
-Partial / Fail with one sentence of evidence, then recommends
-only the `AGENTS.md` or `CONSTRAINTS.md` changes that would have
-prevented an actual failure.
+Post-session compliance audit. Paste into the tool that just
+completed the session. Scores each rule Pass / Partial / Fail with
+one sentence of evidence.
+
+---
+
+### `inactive/`
+Stores prior versions of AGENTS.md or other files for reference.
+Nothing in this folder is read by any agent.
 
 ---
 
 ## Agent-by-Agent Guide
 
 ### Claude Code
-**Best for:** Refactoring, cross-file consistency, IndieWeb spec
-implementation (Webmention, IndieAuth, Micropub), and sessions
-requiring strong instruction-following across many files.
+**Best for:** Multi-file work, IndieWeb spec implementation, security
+hardening, sessions requiring strong instruction-following.
 
-**How it reads context:** Reads `CLAUDE.md` natively. `CLAUDE.md`
-imports `AGENTS.md` with `@AGENTS.md`, so the full ruleset and all
-skills load automatically. Skills are loaded on demand via the
-`$skill-name` syntax.
+**How it reads context:** Reads `CLAUDE.md` natively, which imports
+`AGENTS.md`. Skills load on demand by name.
 
-**Ideal session type:** Implementing IndieWeb specifications,
-security hardening, and any work touching multiple files
-simultaneously. Handles Irreversible Decisions checkpoints more
-reliably than other tools.
+**Cost:** Paid (Anthropic subscription or API credits).
 
-**Tip:** Reference `@CONSTRAINTS.md` and `@MEMORY.md` in the
-opening prompt for full persistent context from prior sessions.
-In Plan Mode, Claude Code names gallery suppression when a
-high-specificity prompt is detected and offers one alternative
-framing before building.
+**Tip:** Reference `@CONSTRAINTS.md` and `@MEMORY.md` in the opening
+prompt for full persistent context.
 
 ---
 
 ### Codex CLI
-**Best for:** Phase 1 scaffolding, schema design, initial file
-structure, and any work where you want strict question-before-build
-discipline with full terminal access.
+**Best for:** Phase 1 scaffolding, schema design, strict
+question-before-build discipline with full terminal access.
 
-**How it reads context:** Natively reads `AGENTS.md` from the
-project root. Skills in `.agents/skills/` are discovered
-automatically. No additional configuration needed.
+**How it reads context:** Reads `AGENTS.md` natively from the
+project root.
 
-**Ideal session type:** Establishing the stack, creating the
-database schema, configuring the build, and writing the first
-migration. Follows Rule 1 (ask before building) most consistently.
+**Cost:** Paid (OpenAI API credits).
 
-**Tip:** Start each session with a `SESSION CONSTRAINTS` block
-listing any phase-specific rules. This promotes reference-section
-content into active working context.
-
----
-
-### Codex and Claude Code (browser / interface versions)
-Both browser-based tools read from an attached repository at
-session start. As long as `AGENTS.md`, `DESIGN.md`, `CONSTRAINTS.md`,
-`DECISIONS.md`, and `.agents/skills/` exist at the repo root, the
-full framework is active even before any application code exists.
-No special configuration is needed beyond connecting the repository.
+**Tip:** Start each session with a SESSION CONSTRAINTS block.
 
 ---
 
 ### Cursor (Chat and Composer)
-**Best for:** Day-to-day feature work, inline edits, and sessions
-where you want suggestions before auto-apply.
+**Best for:** Day-to-day feature work, inline edits, suggestions
+before auto-apply.
 
 **How it reads context:** Reads `AGENTS.md` natively in Chat and
-Composer modes. Also reads `.cursor/rules/*.mdc` for scoped rules
-if present. Inline edit mode is mechanical-only per `AGENTS.md` —
-no architectural decisions.
+Composer modes. Inline edit is mechanical-only.
 
-**Ideal session type:** Feature iterations after major scaffolding
-is complete. Use Composer (Plan mode) to generate a gallery of
-approaches before committing — this maps directly to Rule 2.
-Use inline edit only for typos, style tweaks, and single-file renames.
+**Cost:** Free tier available; Pro plan recommended for heavy use.
 
-**Tip:** In Composer, ask for a plan first. The plan output takes
-gallery form naturally when `AGENTS.md` is in context, giving you
-options to react to before any code is written.
+**Tip:** In Composer, ask for a plan first. It takes gallery form
+naturally when `AGENTS.md` is in context.
 
 ---
 
 ### Gemini CLI
-**Best for:** UI components, interactive feature development, and
-sessions where you want rapid iteration with gallery-style design
-choices.
+**Best for:** UI components, interactive feature development, rapid
+gallery-style iteration.
 
-**How it reads context:** Requires `.gemini/settings.json` to read
-`AGENTS.md` and the skills. Without this file, Gemini uses its own
-defaults and ignores the framework.
+**How it reads context:** Requires `.gemini/settings.json`.
 
-**Ideal session type:** Building visible components — layouts,
-pages, and client-side features — after the stack and schema are
-confirmed. The gallery protocol (Rule 2) is where Gemini performs
-best.
+**Cost:** Free tier available via Google AI Studio API key.
 
-**Known limitation:** Reference sections (Irreversible Decisions
-table, Specifications) are read at session start but not actively
-consulted during code generation. Use a `SESSION CONSTRAINTS` block
-to promote critical rules into active context.
-
-**Tip:** The `SESSION CONSTRAINTS` anchor prompt is especially
-important for Gemini. Use it at the start of every session.
+**Tip:** SESSION CONSTRAINTS is especially important for Gemini —
+never skip it.
 
 ---
 
 ### GitHub Copilot (Chat)
-**Best for:** In-editor assistance, quick completions, and sessions
-where you are driving and want suggestions rather than autonomous
-building.
+**Best for:** In-editor assistance, targeted help on a single file
+or function.
 
 **How it reads context:** Reads `AGENTS.md` as a repository
-instruction file in agent mode. Also reads
-`.github/copilot-instructions.md` natively — this file points
-Copilot to `AGENTS.md` and defines mode-specific behavior without
-duplicating the ruleset.
+instruction file, and `.github/copilot-instructions.md` natively.
 
-**Ideal session type:** Asking questions about the codebase,
-understanding decisions in `DECISIONS.md`, and targeted help on a
-single file or function. Less suited for multi-file architectural work.
+**Cost:** Paid (GitHub subscription); free tier available with limits.
 
-**Tip:** Treat Copilot suggestions as proposals, not decisions.
-Review before accepting, especially for anything touching routes
-or schemas.
+**Tip:** Treat suggestions as proposals. Review before accepting,
+especially for routes or schemas.
+
+---
+
+### Vibe CLI
+**Best for:** Autonomous full-stack scaffolding sessions.
+
+**How it reads context:** Reads `AGENTS.md` natively.
+
+**Cost:** Paid (Mistral API key).
+
+**Known limitation:** Auto Build mode does not pause for gallery
+confirmation. Review `DECISIONS.md` after every session.
+
+---
+
+### Kilo Code (free stack)
+**Best for:** VS Code users who want a full agent experience on a
+free API budget.
+
+**What it is:** A VS Code extension — similar to Cursor's Composer
+but model-agnostic — that connects to Groq, OpenRouter, Anthropic,
+OpenAI, Google, or local models [web:36].
+
+**How it reads context:** Reads `KILO.md`, which imports `AGENTS.md`.
+Skills load on demand by name.
+
+**Cost:** Free with Groq or OpenRouter free-tier API keys.
+
+**Install:** In VS Code, open Extensions (`Ctrl+Shift+X`), search
+"Kilo Code", click the dropdown arrow next to Install, select
+**Install Pre-Release Version** [web:37].
+
+**Tip:** On Groq free tier, keep AGENTS.md plus any loaded skill
+under ~4,000 tokens combined. Load one skill at a time.
+
+---
+
+### Opencode (free stack)
+**Best for:** Terminal users who want Claude Code or Codex CLI
+behavior on a free API budget.
+
+**What it is:** A terminal-based agent — same interaction model as
+Claude Code — that connects to any model provider [web:82].
+
+**How it reads context:** Reads `OPENCODE.md`, which imports
+`AGENTS.md`. Skills load on demand.
+
+**Cost:** Free with Groq or OpenRouter free-tier API keys.
+
+**Install:**
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
+
+**Tip:** Run `opencode` from your project root so it picks up
+`AGENTS.md` automatically.
 
 ---
 
 ### Replit Agent
-**Best for:** Full-stack scaffolding and iterative build sessions
-in a browser-based environment.
+**Best for:** Browser-based full-stack scaffolding, no local setup
+required.
 
 **How it reads context:** Reads `AGENTS.md` natively. Skills in
-`.agents/skills/` are installed automatically via Replit's Agent
-Skills pane, which writes to the same `.agents/skills/` path.
+`.agents/skills/` are available automatically.
 
-**Ideal session type:** Initial project setup and full-stack
-feature builds where you want the agent working across front and
-back end simultaneously. Use auto/build mode with `DECISIONS.md`
-as the log — review it after each session.
+**Cost:** Free tier available; Core plan recommended for the full
+Agent experience [web:56].
 
-**Tip:** In auto/build mode, Replit does not pause for gallery
-confirmation. Review `DECISIONS.md` at the end of each session
-to see which conservative defaults were selected and override any
-that don't reflect your direction.
+**Install:** Sign up at [replit.com](https://replit.com). No
+installation needed — everything runs in the browser.
+
+**Known limitation:** Auto Build mode does not pause for gallery
+confirmation. Review `DECISIONS.md` at the end of every session.
 
 ---
 
 ## How the Files Work Together Across Sessions
 
-Session 1 (e.g. Codex CLI)
-└── Reads: AGENTS.md
-└── Creates: DECISIONS.md, CONSTRAINTS.md (if constraints stated)
+Session 1 (e.g. Codex CLI or Opencode)
+└── Reads:    AGENTS.md
+└── Creates:  DECISIONS.md, CONSTRAINTS.md (if constraints stated)
 └── Proposes: MEMORY.md entries at session end
 
-Session 2 (e.g. Gemini CLI)
-└── Reads: AGENTS.md + CONSTRAINTS.md + MEMORY.md (via settings.json)
-└── Appends: DECISIONS.md
-└── Inherits all constraints and confirmed lessons automatically
+Session 2 (e.g. Kilo Code or Gemini CLI)
+└── Reads:    AGENTS.md + CONSTRAINTS.md + MEMORY.md
+└── Appends:  DECISIONS.md
+└── Inherits: all constraints and confirmed lessons automatically
 
 Session 3 (e.g. Cursor or Claude Code)
-└── Reads: AGENTS.md + CONSTRAINTS.md + MEMORY.md
+└── Reads:    AGENTS.md + CONSTRAINTS.md + MEMORY.md
 └── Resolves: unresolved checkpoints from DECISIONS.md
-└── Continues without repeating Phase 1–2 decisions
-
+└── Continues without repeating prior decisions
 
 No tool ever needs to be told what was decided in a prior session —
 the memory files carry that context automatically.
@@ -500,90 +579,32 @@ the memory files carry that context automatically.
 
 ## Post-Session Compliance Audit (Optional)
 
-At the end of any session, run the eval prompt to check how well
-the agent followed `AGENTS.md`:
-
 1. Open `EVAL_PROMPT.md`
-2. Paste its contents into the tool that just completed the session,
-   or into a separate analysis session with the chat log attached
+2. Paste its contents into the tool that just completed the session
 3. Review the Pass / Partial / Fail scores
-4. Apply only the recommended changes that would have prevented an
-   actual failure — not changes for rules already followed
-
-The final section of the eval prompt asks the agent to recommend
-`AGENTS.md` or `CONSTRAINTS.md` changes. This is the feedback loop
-that improves the framework over time based on real failures, not
-hypothetical ones.
+4. Apply only changes that would have prevented an actual failure
 
 ---
 
 ## Known Behavioral Limitation — High-Specificity Prompts
 
-The gallery protocol (Rule 2 — show 2–3 options before committing)
-is the framework's primary mechanism for preserving human creative
-ownership. It fires reliably when a prompt is exploratory or
-open-ended. It is suppressed when a prompt contains specific
-measurements, named files, or exact values — because the agent
-correctly reads those details as a directive and executes rather
-than offering alternatives.
+The gallery protocol (Rule 2) fires on open-ended prompts and is
+suppressed by specific measurements, file names, or exact values.
+This is intentional.
 
-This is a model-level inference pattern. Adding more rules to
-`AGENTS.md` does not improve adherence when the suppression comes
-from the prompt signal itself.
-
-**If you already work this way** — arriving at sessions with a
-direction formed — specific prompts may trigger gallery suppression
-intentionally. This is not a failure. The eval prompt remains
-useful not to catch missed options, but to ensure `DECISIONS.md`
-and `MEMORY.md` are maintained, which is where the framework's
-value concentrates for experienced users.
-
-For many, this framework is a reminder to think more critically
-and thoroughly while finding blind spots. For others, it simplifies
-creation and reduces friction. Most will fall somewhere in between.
-So long as you use AI tools to create what you would not have
-created otherwise, it is a justified use case.
-
----
-
-**What this means in practice:**
-
-If you want options, write an open prompt:
-> "The terminal dialog feels cramped on mobile. What are some
-> approaches?"
-
-If you want execution, write a specific prompt:
-> "Reduce the terminal dialog padding to 24px on mobile."
-
-Both are valid. The difference is intentional — the framework
-respects your signal.
-
-**Prompts that reliably trigger the gallery:**
+**Prompts that trigger the gallery:**
 - "What are some ways to approach X?"
 - "I'm not happy with how Y looks — what would you try?"
 - "Before you change anything, show me options for Z."
 
-**Prompts that reliably suppress it:**
+**Prompts that suppress it:**
 - Any prompt with exact pixel values, file names, or property names
 - "Change X to Y"
 - Feedback phrased as a correction rather than a question
 
-**The eval prompt is the recovery mechanism.** If a session
-produced changes you accepted but never saw alternatives for, run
-the eval prompt. It will surface missed gallery opportunities,
-log them in `DECISIONS.md`, and — over time — `MEMORY.md` will
-accumulate your aesthetic preferences so future sessions need
-fewer explicit options to reflect your direction accurately.
-
-**For Claude Code users:** When Claude Code is in Plan Mode and
-detects a high-specificity prompt, it names the suppression at the
-top of the plan and offers one alternative framing before building.
-
 ---
 
 ## IndieWeb Quick Reference
-
-This framework is built around IndieWeb principles. The specifications table in `AGENTS.md` and the `$indieweb-specs` skill list implementation priority:
 
 | Priority | Spec | What it does |
 |---|---|---|
@@ -594,18 +615,29 @@ This framework is built around IndieWeb principles. The specifications table in 
 | 3 | Micropub | Lets external apps publish to your site |
 | 4 | WebSub | Pushes new content to subscribers in real time |
 
-Build in this order. Do not implement a spec until a real user need
-depends on it. Load `$indieweb-specs` for the full acceptance
-criteria, test suite links, and dependency map before implementing
-any of these.
+Build in this order. Load `indieweb-specs` before implementing any
+of these.
 
 ---
 
 ## Personal Note
 
-My name is Chris Fornesa, and as someone with a lifelong passion for art and creative pursuits, but also has knowledge of data science and a long-term interest in web development, I have felt myself personally torn between two wants: preserving human creativity and authenticity and ensuring that humans don't simply fall behind technological progress due to our biases about what is or isn't "real". Authenticity can be a loaded, if not politicized, notion that is oftentimes obfuscated to fit specific, traditionalist ideas of what is or isn't (insert topic here). AI and algorithmic harms are very real and are already occurring, but so are algorithmic utility, specifically the creative use cases that artists, programmers, and other creative people, have already achieved using large language models. 
+My name is Chris Fornesa, and as someone with a lifelong passion for
+art and creative pursuits, but also knowledge of data science and a
+long-term interest in web development, I have felt myself personally
+torn between two wants: preserving human creativity and authenticity,
+and ensuring that humans don't simply fall behind technological progress
+due to our biases about what is or isn't "real."
 
-Therefore, this framework is all about leveraging what AI does best, while embedding safeguards to prevent cognitive atrophy and encourage critical thought in the process. Though agentic AI has made the process of creating websites, applications, and software more accessible than ever, the real opportunity is the ability to apply more thought, not less of it, into your creative programming practice. Whether you're a beginner, intermediate, or advanced developer, engineer, or AI consumer, this framework will hopefully encourage you to exercise your creative prowess as you utilize AI coding tools. 
+This framework is all about leveraging what AI does best, while
+embedding safeguards to prevent cognitive atrophy and encourage critical
+thought in the process. Though agentic AI has made the process of
+creating websites, applications, and software more accessible than ever,
+the real opportunity is the ability to apply more thought, not less of
+it, into your creative programming practice. Whether you're a beginner,
+intermediate, or advanced developer, engineer, or AI consumer, this
+framework will hopefully encourage you to exercise your creative prowess
+as you utilize AI coding tools.
 
 ---
 

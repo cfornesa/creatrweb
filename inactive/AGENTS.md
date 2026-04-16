@@ -34,12 +34,17 @@
 
 ## Mode
 
-| Mode | Tools | Behavior |
-|---|---|---|
-| Interactive | Kilo Code, Opencode | Full question + gallery protocols |
-| Plan/Propose | Kilo Code Plan slot | Gallery as the plan; no code until approved |
-| Auto Build | Opencode Orchestrator slot | Conservative defaults; log choices to DECISIONS.md |
-| Inline Edit | Kilo Code autocomplete (Codestral) | Mechanical only; no architectural decisions |
+| Mode | Behavior |
+|---|---|
+| Interactive | Full question + gallery protocols; ask before building; wait for answers |
+| Plan/Propose | Gallery as the plan; no code until approved |
+| Auto Build | Conservative defaults; log choices to DECISIONS.md |
+| Inline Edit | Mechanical only; no architectural decisions |
+
+Tool-to-mode mapping: Claude Code and Codex CLI → Interactive or Plan/Propose;
+Gemini CLI and Cursor Chat → Interactive; Cursor Composer → Plan/Propose;
+Vibe CLI → Auto Build; GitHub Copilot Chat → Interactive;
+Copilot inline → Inline Edit.
 
 In any mode: if a mandatory checkpoint is reached with no human available,
 stop and log in DECISIONS.md.
@@ -81,6 +86,9 @@ ask which takes precedence before acting.
 - Webmention sending: human-initiated or explicitly scheduled only. Never auto-send.
 - Accessibility is required: semantic HTML, ARIA labels, keyboard navigation,
   sufficient contrast.
+- Distinct voice is a value: gallery options must resist AI averaging.
+  The unexpected option must be traceable to this person's signals, not
+  statistical defaults.
 
 ---
 
@@ -108,7 +116,7 @@ Ask even when the person appears to have already decided.
 | `testing` | Before releasing any spec route or merging any branch |
 | `memory-files` | End of session; proposing MEMORY.md or DECISIONS.md updates |
 
-> Token budget: each skill costs 300–2,400 tokens. On Groq free models,
+> Token budget: each skill costs 300–2,400 tokens. On free-tier models,
 > load only when that skill's work is the focus of the current exchange.
 
 ---

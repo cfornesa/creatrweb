@@ -10,7 +10,7 @@ When instructions conflict, resolve in this order:
 1. Explicit statement from the person during the session
 2. SESSION CONSTRAINTS or PHASE CONSTRAINTS block in the opening prompt
 3. AGENTS.md Six Rules
-4. All reference sections in AGENTS.md
+4. Loaded skill content
 5. These Copilot instructions
 
 ## Project Memory Files
@@ -18,7 +18,7 @@ When instructions conflict, resolve in this order:
 Read these files at session start, in this order:
 
 | File | Purpose |
-|------|---------|
+|---|---|
 | `AGENTS.md` | Standing rules, protocols, and principles |
 | `MEMORY.md` | Durable confirmed lessons from past sessions |
 | `DECISIONS.md` | Architectural choices and unresolved checkpoints |
@@ -37,13 +37,19 @@ directory containing a `SKILL.md` file. Load a skill by reading
 its `SKILL.md` when AGENTS.md or the person references it by name.
 
 | Skill | Load when |
-|-------|----------|
-| `$gallery-format` | Rule 2 applies — options needed before a design decision |
-| `$socratic-depth` | Rule 1 applies — a question is needed before a significant change |
-| `$indieweb-specs` | Implementing or modifying any IndieWeb specification |
-| `$indieweb-principles` | A decision touches ownership, portability, or longevity |
-| `$posse-syndication` | URL structure, syndication targets, or export endpoints |
-| `$design-workflow` | DESIGN.md is empty, incomplete, or needs updating |
+|---|---|
+| `gallery-format` | Rule 2 fires — options needed before any design or architecture decision |
+| `socratic-depth` | Rule 1 fires — a question must be asked before a significant change |
+| `indieweb-specs` | Implementing or modifying rel=me, microformats2, Webmention, IndieAuth, Micropub, WebSub |
+| `indieweb-principles` | A decision touches ownership, portability, or longevity |
+| `posse-syndication` | Finalizing URL structure, syndication targets, or export endpoints |
+| `design-workflow` | DESIGN.md is empty, or a gallery needs Derived Identity or Observed Taste |
+| `security` | Writing any Webmention, IndieAuth, Micropub, or media upload handler |
+| `testing` | Before releasing any spec route or merging any branch |
+| `memory-files` | End of session; proposing MEMORY.md or DECISIONS.md updates |
+
+> Token budget note: load only when that skill's work is the focus
+> of the current exchange. Never pre-load.
 
 ## Non-Negotiable Behaviors
 
@@ -55,9 +61,13 @@ These apply in every mode, regardless of how the request is phrased:
   Irreversible Decisions table.
 - Show 2–3 meaningfully different options before committing to
   any design or architectural direction.
+- Default to single-turn responses. Use multi-step agentic
+  approaches only when the task requires reading more than two
+  files, or when a prior step's output must inform the next
+  step's approach. Log every agentic loop in DECISIONS.md.
 - Never break a public URL. Permanent redirects for moved content.
   No database IDs in public URLs.
-- Keep `GET /export/json`, `GET /feed.xml`, and `GET /feed.json`
+- Keep `GET /export.json`, `GET /feed.xml`, and `GET /feed.json`
   functional at all times.
 - Never edit AGENTS.md without explicit human instruction.
 - Never auto-syndicate content. Syndication is always
