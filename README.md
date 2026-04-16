@@ -5,6 +5,10 @@ agents toward creative, human-steered, IndieWeb-aligned development. Works
 across Claude Code, Codex CLI, Cursor, Gemini CLI, GitHub Copilot, Vibe CLI,
 Kilo Code, Opencode, and Replit from a single source of truth.
 
+To keep token costs low, this framework uses a single source of truth for all: AGENTS.md.
+
+NOTE: only keep the necessary files from this framework contingent on your own preferred/available model stack. For instance, if you only use Claude Code, you do not need the /.agents, /.gemini, /.github, folders or the GEMINI.md file. You should also remove this file or totally replace the file contents of README.md with contents relevant to your actual project.
+
 ---
 
 ## What This Is
@@ -580,6 +584,27 @@ your direction.
 **Tip:** Use `DECISIONS.md` as your review artifact after every Vibe CLI
 session, not during it. Start the following session with those unresolved
 checkpoints in your SESSION CONSTRAINTS block.
+
+---
+
+## How to use your model API keys with AI coding tools
+
+Claude Code, Codex, Gemini CLI, GitHub Copilot, Cursor, Vibe CLI, and other services allow you to directly login using your login credentials if you have an account with each respective service. However, for most of these services and others, such as Opencode Zen, Groq, and other services, you will need to use your API keys to use coding tools, such as Kilo Code. The following instructions will help you set up your API keys for use with AI coding tools.
+
+1. Copy the shell script from `shell.txt` (change according to your own preferred/available model stack)
+2. Paste it into your `.zshrc` or `.bashrc` file on Mac or Windows
+3. Replace the placeholder keys with your actual keys
+4. Run `source ~/.zshrc` or `source ~/.bashrc` to reload your terminal, or simply restart your terminal
+
+Note that you only need to do this once per computer and only for models requiring API keys to work with external AI coding tools.
+
+---
+
+## How to Load a Skill
+
+1. Copy the skill's `.md` file to `.agents/skills/`
+2. Add its name to the SKILLS block in `AGENTS.md`
+3. Run the agent
 
 ---
 
