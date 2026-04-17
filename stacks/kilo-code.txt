@@ -1,0 +1,37 @@
+Default Model
+  Provider: Kilo Code native
+  Model ID: kilo-auto/free
+  Reason: Automatically routes to the best available free
+          model at time of request; best general fallback [web:140]
+
+Small Model
+  Provider: Kilo Code native
+  Model ID: nvidia/nemotron-3-super-120b-a12b:free
+  Reason: 120B hybrid MoE, activates only 12B parameters —
+          efficient for lower-stakes tasks while remaining
+          capable [web:131]
+
+Code
+  Provider: Kilo Code native
+  Model ID: nvidia/nemotron-3-super-120b-a12b:free
+  Reason: Strong on multi-agent and complex coding tasks;
+          confirmed free permanently in Kilo [web:156]
+
+Ask
+  Provider: Kilo Code native
+  Model ID: openrouter/free (Free Models Router)
+  Reason: Routes to best available free model for
+          conversational queries; no file writes needed [web:156]
+
+Debug
+  Provider: Kilo Code native
+  Model ID: kilo-auto/free
+  Reason: Auto-routing ensures the strongest available free
+          model handles error diagnosis at time of request [web:140]
+
+Plan
+  Provider: Kilo Code native
+  Model ID: nvidia/nemotron-3-super-120b-a12b:free
+  Reason: Built for complex multi-agent reasoning; best
+          permanently free option for gallery decisions
+          and Rule 1/2 triggers [web:131]

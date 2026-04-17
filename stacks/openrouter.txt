@@ -1,0 +1,36 @@
+Default Model
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-120b:free
+  Reason: Largest and strongest free model on OpenRouter;
+          handles anything not covered by a specific mode [cite:98]
+
+Small Model
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-20b:free
+  Reason: Lighter version of gpt-oss; faster and cheaper
+          for low-stakes completions while staying on
+          OpenRouter only [cite:98]
+
+Code
+  Provider: OpenRouter
+  Model ID: qwen/qwen2.5-coder-32b-instruct:free
+  Reason: Purpose-built coding model; strongest free option
+          for implementation tasks on OpenRouter [cite:98]
+
+Ask
+  Provider: OpenRouter
+  Model ID: minimax/minimax-m2.5:free
+  Reason: Strong conversational reasoning; good balance of
+          speed and capability for questions without file writes [cite:98]
+
+Debug
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-120b:free
+  Reason: Strongest free model available for multi-file
+          error tracing and diagnosis [cite:98]
+
+Plan
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-120b:free
+  Reason: Strongest free reasoning for gallery decisions,
+          Rule 1 and Rule 2 triggers, and architectural planning [cite:98]

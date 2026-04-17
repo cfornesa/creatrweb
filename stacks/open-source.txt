@@ -1,0 +1,36 @@
+Default Model
+  Provider: Opencode Go
+  Model ID: glm-5.1
+  Reason: Strongest model in the open source stack;
+          purpose-built for agentic multi-file tasks [web:107]
+
+Small Model
+  Provider: Groq
+  Model ID: compound-beta-mini
+  Reason: Fast, free on Groq; handles low-stakes completions
+          and quick clarifications without consuming Opencode Go quota
+
+Code
+  Provider: Opencode Go
+  Model ID: glm-5.1
+  Reason: Best agentic coding model in this stack;
+          handles multi-file implementation and tool calls reliably [web:107]
+
+Ask
+  Provider: Groq
+  Model ID: compound-beta
+  Reason: Free on Groq, compound reasoning, good for
+          questions and explanations without touching files
+
+Debug
+  Provider: Opencode Go
+  Model ID: minimax-m2.7
+  Reason: Strong reasoning and context handling;
+          GLM-5.1 fallback if M2.7 is rate-limited
+
+Plan
+  Provider: Opencode Go
+  Model ID: glm-5.1
+  Reason: Strongest reasoning in this stack for gallery
+          decisions, Rule 1 and Rule 2 triggers,
+          and multi-step architectural planning

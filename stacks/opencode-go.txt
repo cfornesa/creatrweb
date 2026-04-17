@@ -1,0 +1,38 @@
+Default Model
+  Provider: Opencode Go
+  Model ID: glm-5.1
+  Reason: Strongest model in this stack; purpose-built for
+          agentic multi-file tasks, benchmarks above Gemini
+          2.5 Pro on coding tasks [web:107]
+
+Small Model
+  Provider: Opencode Go
+  Model ID: minimax-m2.5
+  Reason: Lighter and faster than M2.7; handles low-stakes
+          completions efficiently within subscription quota
+
+Code
+  Provider: Opencode Go
+  Model ID: glm-5.1
+  Reason: Best agentic coding model in this stack;
+          strongest multi-file coordination and tool use [web:107]
+
+Ask
+  Provider: Opencode Go
+  Model ID: minimax-m2.7
+  Reason: Strong conversational reasoning at lower cost
+          than GLM-5.1; good for questions without file writes
+
+Debug
+  Provider: Opencode Go
+  Model ID: minimax-m2.7
+  Reason: Strong reasoning for error tracing; preserves
+          GLM-5.1 quota for Code and Default modes where
+          agentic strength matters most
+
+Plan
+  Provider: Opencode Go
+  Model ID: glm-5.1
+  Reason: Strongest reasoning in this stack for gallery
+          decisions, Rule 1 and Rule 2 triggers, and
+          multi-step architectural planning [web:107]

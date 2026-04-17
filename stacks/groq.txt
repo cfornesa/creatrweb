@@ -1,0 +1,35 @@
+Default Model
+  Provider: Groq
+  Model ID: groq/compound
+  Reason: Multi-tool support, Llama 4 Scout + GPT-OSS 120B
+          backbone; strongest option for general tasks [web:190]
+
+Small Model
+  Provider: Groq
+  Model ID: groq/compound-mini
+  Reason: 3× lower latency than Compound, single-tool per
+          request; best for quick low-stakes completions [web:178]
+
+Code
+  Provider: Groq
+  Model ID: groq/compound
+  Reason: Multi-tool call support handles agentic coding
+          tasks; built-in code execution via E2B [web:190]
+
+Ask
+  Provider: Groq
+  Model ID: groq/compound-mini
+  Reason: Fastest response for conversational queries;
+          web search tool available for current information [web:178]
+
+Debug
+  Provider: Groq
+  Model ID: groq/compound
+  Reason: Multi-tool support allows code execution during
+          debugging; stronger reasoning than Compound Mini [web:190]
+
+Plan
+  Provider: Groq
+  Model ID: groq/compound
+  Reason: GPT-OSS 120B backbone and multi-tool reasoning
+          handles gallery decisions and Rule 1/2 triggers [web:190]

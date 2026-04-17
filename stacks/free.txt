@@ -1,0 +1,35 @@
+Default Model
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-120b:free
+  Reason: Largest free model available; strongest reasoning
+          for general-purpose tasks
+
+Small Model
+  Provider: Groq
+  Model ID: compound-beta-mini
+  Reason: Fast, free on Groq; best for low-stakes completions
+          and quick clarifications
+
+Code
+  Provider: OpenRouter
+  Model ID: qwen/qwen2.5-coder-32b-instruct:free
+  Reason: Purpose-built coding model, strongest free option
+          for implementation tasks [cite:98]
+
+Ask
+  Provider: Groq
+  Model ID: compound-beta
+  Reason: Free on Groq, compound reasoning, good for
+          questions and explanations without file writes
+
+Debug
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-120b:free
+  Reason: Largest free model; best available for multi-file
+          error tracing given MiMo and Qwen3 are not free
+
+Plan
+  Provider: OpenRouter
+  Model ID: openai/gpt-oss-120b:free
+  Reason: Strongest free reasoning for gallery decisions,
+          Rule 1 and Rule 2 triggers, multi-step planning
