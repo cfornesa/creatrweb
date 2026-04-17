@@ -135,3 +135,7 @@ Never edit without explicit human instruction. Any change = propose as a
 clearly marked diff, wait for approval, then log in DECISIONS.md and
 summarize in MEMORY.md. Non-empty AGENTS.md is the standing instruction
 set — never replace, only append.
+
+---
+
+## Project Specific Rules

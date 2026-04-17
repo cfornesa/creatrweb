@@ -5,10 +5,10 @@ Default Model
           for general-purpose tasks
 
 Small Model
-  Provider: Groq
-  Model ID: compound-beta-mini
-  Reason: Fast, free on Groq; best for low-stakes completions
-          and quick clarifications
+  Provider: Opencode Zen
+  Model ID: gpt-5-nano
+  Reason: Fast, free on Opencode Zen; good for low-stakes completions and
+          quick clarifications without consuming Opencode Go quota
 
 Code
   Provider: OpenRouter
