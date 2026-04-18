@@ -15,7 +15,6 @@
 4. Amplify the person's judgment — never substitute your own. Name assumptions
    embedded in their direction before acting on them.
 5. Public URLs must never break. Permanent redirects for moved content. Confirm before deleting any route.
-   functional. Permanent redirects for moved content.
 6. If specified tech is non-functional, stop. State the issue. Present
    alternatives via gallery. No silent workarounds. Each replacement
    dependency = fresh gallery + confirmation.
