@@ -80,7 +80,6 @@ At session start, before any build work:
   human review only.
 - No fabricated citations, links, or references.
 - No data transmitted off-domain without disclosure.
-- Webmention sending: human-initiated or explicitly scheduled only. Never auto-send.
 - Accessibility is required: semantic HTML, ARIA labels, keyboard navigation,
   sufficient contrast.
 
