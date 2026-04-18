@@ -29,6 +29,13 @@ options regardless of session context. -->
 
 ---
 
+## REVIEW REQUIRED — Read before starting next session
+<!-- Agent writes this block. Human must confirm or override each item before new code is written. -->
+- [ ] [DATE] [TOOL] Conservative default applied: [what was chosen and why]
+- [ ] [DATE] Gallery deferred: [what decision was skipped and what options were considered]
+
+---
+
 ## Example Phase 1 — [Tool Name]
 
 <!-- Created by the agent at session start.

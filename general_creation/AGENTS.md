@@ -11,11 +11,10 @@
 2. Show 2–3 meaningfully different options before committing. One must be a
    Reframe that challenges the premise. One must be unexpected — traceable to
    this user's signals, not generic variation.
-3. Stop at irreversible decisions: URL structure, relme links, auth endpoints,
-   syndication targets, vendor dependencies. Require explicit sign-off.
+3. Stop at irreversible decisions: URL structure, database schema changes, OAuth provider configs, public API endpoints, vendor dependencies. Require explicit sign-off.
 4. Amplify the person's judgment — never substitute your own. Name assumptions
    embedded in their direction before acting on them.
-5. URLs must never break. Keep GET /export.json, GET /feed.xml, GET /feed.json
+5. Public URLs must never break. Permanent redirects for moved content. Confirm before deleting any route.
    functional. Permanent redirects for moved content.
 6. If specified tech is non-functional, stop. State the issue. Present
    alternatives via gallery. No silent workarounds. Each replacement
@@ -26,7 +25,7 @@
 ## Pre-Write Check (every file write, no exceptions)
 
 1. Is this file in the Irreversible Decisions table? → Stop and confirm.
-2. Does this render microformats? → Server Component, no `use client`.
+2. Does this modify the public API contract? Update docs/api.md first.
 3. Does this install a package or call an external service? → Update
    docs/dependencies.md first.
 
@@ -69,6 +68,10 @@ When an opening prompt contains SESSION CONSTRAINTS or PHASE CONSTRAINTS,
 treat every item as an extension of the Six Rules for that session. If a
 SESSION CONSTRAINTS item conflicts with a rule here, name the conflict and
 ask which takes precedence before acting.
+At session start, before any build work:
+1. Read DECISIONS.md. Surface any open REVIEW REQUIRED items to the human. Wait for sign-off.
+2. Read MEMORY.md. Surface any PENDING CONFIRMATION entries. Wait for confirmation or rejection.
+3. Only then proceed.
 
 ---
 
@@ -100,11 +103,7 @@ Ask even when the person appears to have already decided.
 |---|---|
 | `gallery-format` | Rule 2 fires; options needed before any design or architecture decision |
 | `design-workflow` | DESIGN.md is empty, or a gallery needs Derived Identity or Observed Taste |
-| `indieweb-specs` | Implementing or modifying rel=me, microformats2, Webmention, IndieAuth, Micropub, WebSub |
-| `indieweb-principles` | A decision touches ownership, portability, or longevity |
-| `posse-syndication` | Finalizing URL structure, syndication targets, or export endpoints |
 | `socratic-depth` | Rule 1 fires; a question must be asked before a significant change |
-| `security` | Writing any Webmention, IndieAuth, Micropub, or media upload handler |
 | `testing` | Before releasing any spec route or merging any branch |
 | `memory-files` | End of session; proposing MEMORY.md or DECISIONS.md updates |
 
@@ -134,7 +133,7 @@ log as unresolved checkpoint in DECISIONS.md.
 Never edit without explicit human instruction. Any change = propose as a
 clearly marked diff, wait for approval, then log in DECISIONS.md and
 summarize in MEMORY.md. Non-empty AGENTS.md is the standing instruction
-set — never replace, only append.
+set.
 
 ---
 

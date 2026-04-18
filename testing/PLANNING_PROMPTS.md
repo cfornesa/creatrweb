@@ -114,34 +114,66 @@ binding), MEMORY.md (if lessons confirmed).
 Deliverable: handoff prompt for Opencode Go (glm-5.1 as lead).
 
 ## 2 OPEN SOURCE: 
-I want to build a policy argument mapper where
-users input a topic and upload documents to produce a structured
-argument map — claims, evidence, counterarguments, and citations.
-Stack: Opencode Go + Kilo Code + Groq + OpenRouter free.
-Models: glm-5.1 (agentic sessions), gpt-oss-120b:free (reasoning
-fallback), compound (fast queries, 30K TPM hard limit),
-qwen2.5-coder-32b:free (implementation). Hard constraint: corpus
-size must stay manageable — large document sets must be chunked
-due to OpenRouter free tier rate limits. No PRC-affiliated models
-may be used if this project covers Uyghur, Palestine, Sudan, or
-Congo content.
-Files: DECISIONS.md (required), DESIGN.md (required — argument
-map output and UI must reflect the user's aesthetic references,
-not generic data viz defaults), CONSTRAINTS.md (required — corpus
-size rule and PRC restriction are both binding), MEMORY.md (if
-lessons confirmed).
+I want to build a language learning micro-story
+engine where users pick a target language and a vocabulary list
+and receive original micro-stories (200–400 words) that embed
+the target words naturally in context, with a glossary and
+comprehension questions per story.
+Stack: Opencode Go + Kilo Code + Groq + OpenRouter free tier.
+Models: glm-5.1 (primary agentic lead — multilingual generation
+strength), minimax-m2.7 (fallback, narrative generation),
+gpt-5-nano via Opencode Zen free (fast low-stakes tasks).
+Reasoning: gpt-oss-120b:free via OpenRouter. Implementation:
+devstral-small:free or llama-4-scout:free via OpenRouter.
+Fast queries: Groq compound, 30K TPM hard limit, 30 req/min
+total. Note: all Opencode Go models are PRC-affiliated — this
+project must contain no politically sensitive content of any
+kind. OpenRouter free tier requests must be sequential, not
+simultaneous. Routing models (kilo-auto/free, openrouter/free)
+may vary between sessions — record actual model served in
+DECISIONS.md each session.
+Files: DECISIONS.md (required), DESIGN.md (required — story
+output formatting and UI must reflect the user's aesthetic
+references, not generic language-app defaults; ask for
+References before any interface or output design question),
+CONSTRAINTS.md (required — PRC model restriction, sequential
+request architecture, and 30K TPM limit are all binding),
+MEMORY.md (if lessons confirmed this session).
 Deliverable: handoff prompt for Opencode Go (glm-5.1 as lead).
 
 ## 8 PAID STACK: 
-I want to enhance my existing resume website using
-the full paid stack routing script. Routing order: scaffold→Codex,
-spec→Claude Code, ui→Gemini, feature→Cursor, build→Vibe CLI,
-inline→Copilot, review→Claude Code via EVAL_PROMPT. Each tool
-handles only its designated task type — no cross-routing.
-Files: DECISIONS.md (required), DESIGN.md (required — resume
-enhancements must trace to confirmed Derived Identity, not generic
-portfolio defaults), CONSTRAINTS.md (required), MEMORY.md (if
-lessons confirmed), EVAL_PROMPT.md (required — review criteria
-must be confirmed before the Claude Code review step).
+I want to build a studio art portfolio site where
+each piece has a full process journal — materials, stages,
+references, and notes — alongside the final work, with
+microformats2 h-entry markup, a gallery view that reflects my
+confirmed aesthetic identity, and GET /export.json and
+GET /feed.xml endpoints.
+Stack: All six paid tools via creatr command. Routing:
+scaffold→Codex (schema, image data model with placeholder slots,
+file structure — no real images required at this phase),
+spec→Claude Code (microformats2 h-entry, export and feed
+endpoints, irreversible URL structure decisions),
+ui→Gemini (gallery view and process journal UI, working against
+placeholder assets until Cursor phase),
+feature→Cursor (real image integration, materials tagging,
+process stage filtering, gallery refinements),
+build→Vibe CLI (build pipeline and deployment scaffolding),
+inline→Copilot (inline edits and mechanical refinements),
+review→Claude Code via EVAL_PROMPT (full spec compliance,
+export endpoint validation, pre-merge checklist).
+Each tool handles only its designated task type — no
+cross-routing. Real images are introduced in the Cursor
+feature phase only, not during scaffold, spec, or UI phases.
+Files: DECISIONS.md (required — URL structure and h-entry
+schema are irreversible decisions requiring explicit sign-off
+before Claude Code spec phase begins), DESIGN.md (required —
+gallery UI must be derived from confirmed Derived Identity,
+not generic portfolio defaults; Gemini UI phase is blocked
+until DESIGN.md References and Derived Identity are confirmed),
+CONSTRAINTS.md (required — image-last sequencing rule and
+URL structure freeze are binding constraints),
+MEMORY.md (if lessons confirmed this session),
+EVAL_PROMPT.md (required — review criteria must be confirmed
+before the Claude Code review step).
 Deliverable: handoff prompts for each tool in routing order,
 formatted as a numbered sequence.
