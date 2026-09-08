@@ -1,0 +1,15 @@
+{
+  "context": {
+    "fileName": [
+      "AGENTS.md",
+      "LOOP-AGENTS.md",
+      "DECISIONS.md",
+      "CONSTRAINTS.md",
+      "DESIGN.md",
+      "MEMORY.md"
+    ],
+    "fileFiltering": {
+      "respectGitIgnore": true
+    }
+  }
+}
