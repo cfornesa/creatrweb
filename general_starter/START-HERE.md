@@ -152,7 +152,7 @@ Section 5 instead. If it does not exist, create it.
 | `CLAUDE.md` | Write from the Appendix. A pointer to `AGENTS.md`, no unique rules. |
 | `GEMINI.md` | Write from the Appendix. A pointer to `AGENTS.md`, no unique rules. |
 | `.github/copilot-instructions.md` | Write from the Appendix. |
-| `.gemini/settings.json` | Write from the Appendix. **If it already exists, merge the context filenames into its array rather than replacing the file.** |
+| `.gemini/settings.json` | Write from the Appendix. **If it already exists, merge the context filenames into its array rather than replacing the file.** Drop the `GRAPH-AGENTS.md` entry if Section 2 found this repo single-service. |
 | `MEMORY.md` `DECISIONS.md` `CONSTRAINTS.md` `DESIGN.md` | Write from the Appendix — headers only, then add whatever Section 3's inventory routed into them. Never invent entries beyond that. A fabricated `DESIGN.md` poisons every future gallery. |
 | An `AGENTS.md` that already exists | **Never replace.** Append only the orchestrator block — everything from `<!-- ===== BEGIN CREATRWEB ORCHESTRATOR ===== -->` to the end of this folder's `AGENTS.md` — to the end of theirs. See Section 5. |
 | Existing skills already in the repo | **Never delete.** Leave every file in place; Section 5 evaluates and registers them. |
@@ -470,6 +470,7 @@ These apply in every mode, regardless of how the request is phrased:
     "fileName": [
       "AGENTS.md",
       "LOOP-AGENTS.md",
+      "GRAPH-AGENTS.md",
       "DECISIONS.md",
       "CONSTRAINTS.md",
       "DESIGN.md",

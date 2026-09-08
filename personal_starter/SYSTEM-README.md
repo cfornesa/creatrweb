@@ -300,7 +300,7 @@ repo root:
 | `CLAUDE.md` | Pointer to `AGENTS.md`. No unique rules. |
 | `GEMINI.md` | Pointer to `AGENTS.md`. No unique rules. |
 | `.github/copilot-instructions.md` | Copilot entry point; priority order + memory-file table |
-| `.gemini/settings.json` | Gemini context array — must list `AGENTS.md`, `LOOP-AGENTS.md`, `DECISIONS.md`, `CONSTRAINTS.md`, `DESIGN.md`, `MEMORY.md` |
+| `.gemini/settings.json` | Gemini context array — must list `AGENTS.md`, `LOOP-AGENTS.md`, `GRAPH-AGENTS.md`, `DECISIONS.md`, `CONSTRAINTS.md`, `DESIGN.md`, `MEMORY.md`. Drop the `GRAPH-AGENTS.md` line on a single-service install, or leave it — Gemini skips a context file that isn't there. |
 | `MEMORY.md` `DECISIONS.md` `CONSTRAINTS.md` `DESIGN.md` | Header-only scaffolds. Never pre-populate — the `memory-files` and `design-workflow` skills fill them on confirmation. |
 | `.claude/skills/<name>/SKILL.md` + `.agents/skills/<name>/SKILL.md` | The 9 skills listed in `AGENTS.md` Section 9. Bodies are in the Appendix below. Write each skill folder individually — never replace `.claude/skills/` or `.agents/skills/` wholesale. Both mirrors must be written and byte-identical. Existing skills are registered and kept, never replaced. |
 
